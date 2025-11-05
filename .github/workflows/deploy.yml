@@ -28,15 +28,15 @@ jobs:
         id: aws_creds
         uses: aws-actions/configure-aws-credentials@v4  # Updated from v1
         with:
-          aws-access-key-id: \${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: \${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: \${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Build deployment configs
         run: |
           python build_deployment_configs.py \
-            --region "\$AWS_REGION" \
-            --sagemaker-project-name "\$SAGEMAKER_PROJECT_NAME"
+            --region "$AWS_REGION" \
+            --sagemaker-project-name "$SAGEMAKER_PROJECT_NAME"
 
       - name: Store configs to artifacts
         uses: actions/upload-artifact@v4  # Updated from v3
@@ -50,10 +50,10 @@ jobs:
       - name: Deploy to Staging
         run: |
           python deploy_stack.py \
-            --region \${{ env.AWS_REGION }} \
+            --region ${{ env.AWS_REGION }} \
             --stack-name github-stg \
-            --param-file \${{ env.EXPORT_TEMPLATE_STAGING_CONFIG }} \
-            --project-name \${{ env.SAGEMAKER_PROJECT_NAME }}
+            --param-file ${{ env.EXPORT_TEMPLATE_STAGING_CONFIG }} \
+            --project-name ${{ env.SAGEMAKER_PROJECT_NAME }}
 
       - name: Test Staging
         run: | 
@@ -79,9 +79,9 @@ jobs:
         id: aws_creds
         uses: aws-actions/configure-aws-credentials@v4  # Updated from v1
         with:
-          aws-access-key-id: \${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: \${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: \${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Load configs
         uses: actions/download-artifact@v4  # Updated from v3
@@ -91,7 +91,7 @@ jobs:
       - name: Deploying to Production
         run: |
           python deploy_stack.py \
-            --region \${{ env.AWS_REGION }} \
+            --region ${{ env.AWS_REGION }} \
             --stack-name github-prd \
-            --param-file \${{ env.EXPORT_TEMPLATE_PROD_CONFIG }} \
-            --project-name \${{ env.SAGEMAKER_PROJECT_NAME }}
+            --param-file ${{ env.EXPORT_TEMPLATE_PROD_CONFIG }} \
+            --project-name ${{ env.SAGEMAKER_PROJECT_NAME }}
