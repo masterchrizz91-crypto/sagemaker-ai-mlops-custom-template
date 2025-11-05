@@ -205,7 +205,7 @@ def get_pipeline(
         eta=0.2,
         gamma=4,
         min_child_weight=6,
-        subsample=0.7,
+        subsample=0.6,
         silent=0,
     )
     step_args = xgb_train.fit(
