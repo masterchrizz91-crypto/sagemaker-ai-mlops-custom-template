@@ -200,7 +200,7 @@ def get_pipeline(
     )
     xgb_train.set_hyperparameters(
         objective="reg:linear",
-        num_round=50,
+        num_round=40,
         max_depth=6,
         eta=0.2,
         gamma=5,
